@@ -178,6 +178,24 @@ button:disabled {
   border-bottom: none;
 }
 
+.login-form {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-form h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.login-form p {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
 @media (max-width: 600px) {
   .price-data {
     grid-template-columns: 1fr;
@@ -190,5 +208,9 @@ button:disabled {
   
   .network-dropdown {
     max-height: 150px;
+  }
+  
+  .login-form {
+    max-width: none;
   }
 }

@@ -83,9 +83,23 @@ const TokenForm = ({ onSubmit }) => {
     setError('');
 
     try {
-      const tokenData = await sdk.queries.tokens({
-        ids: [{ address: tokenAddress, networkId: parseInt(networkId) }]
+      const response = await sdk.send(`
+        query GetTokenInfo($address: String!, $networkId: Int!) {
+          tokens(ids: [{ address: $address, networkId: $networkId }]) {
+            address
+            symbol
+            name
+            decimals
+            totalSupply
+            networkId
+          }
+        }
+      `, {
+        address: tokenAddress,
+        networkId: parseInt(networkId)
       });
+
+      const tokenData = response.tokens;
 
       if (!tokenData || tokenData.length === 0) {
         setError('Token not found on selected network');

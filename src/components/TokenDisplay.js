@@ -219,9 +219,31 @@ const TokenDisplay = ({ tokenData }) => {
     }).format(price);
   };
 
-  const formatMarketCap = (price, supply) => {
+  const formatMarketCap = (price, supply, decimals) => {
     if (!price || !supply) return 'N/A';
-    const marketCap = price * supply;
+    
+    // Debug logging to check actual values
+    console.log('Market Cap Debug:', {
+      price,
+      supply,
+      decimals,
+      supplyType: typeof supply,
+      supplyValue: supply
+    });
+    
+    // Test both approaches: with and without decimal adjustment
+    const rawMarketCap = price * supply; // Assuming API returns human-readable supply
+    const adjustedMarketCap = decimals ? price * (supply / Math.pow(10, decimals)) : rawMarketCap;
+    
+    console.log('Market Cap Calculations:', {
+      rawMarketCap,
+      adjustedMarketCap,
+      difference: rawMarketCap / adjustedMarketCap
+    });
+    
+    // Use raw calculation first (API likely pre-adjusts)
+    const marketCap = rawMarketCap;
+    
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -268,7 +290,8 @@ const TokenDisplay = ({ tokenData }) => {
           <div className="market-cap-value">
             {formatMarketCap(
               priceData?.priceUsd,
-              tokenData.tokenInfo?.totalSupply
+              tokenData.tokenInfo?.totalSupply,
+              tokenData.tokenInfo?.decimals
             )}
           </div>
         </div>
