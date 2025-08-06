@@ -215,7 +215,7 @@ const TokenDisplay = ({ tokenData }) => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 8
+      maximumFractionDigits: 9
     }).format(price);
   };
 
